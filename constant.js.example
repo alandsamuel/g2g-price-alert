@@ -1,0 +1,9 @@
+const devWebhook = "https://discord.com/api/webhooks/1056699445904953384/awHfABBLBo0ypjRoj3zGtreoYyp5Mk6TwhPeRTjmlLPocV3Gl6gI7lnOio5e660ynbR-";
+const laFamiliaWebhook = "https://discord.com/api/webhooks/1056730148277321758/-FfqMhHgeRj8CAmAsJarwfqUrFWQXs2kRWfaFuFeNrJCxUbDmW3tZ3A8elnc9uXi7CS1";
+const g2gPrice = "https://sls.g2g.com/offer/search?service_id=lgc_service_1&brand_id=lgc_game_23027&region_id=ac3f85c1-7562-437e-b125-e89576b9a38e&sort=lowest_price&page_size=48&currency=IDR&country=ID";
+
+module.exports = {
+devWebhook,
+laFamiliaWebhook,
+g2gPrice,
+}
