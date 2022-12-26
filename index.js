@@ -36,4 +36,5 @@ const job = new CronJob(
 	'Asia/Jakarta'
 );
 
-job.start()
+console.log('Starting Cron....')
+job.start();
