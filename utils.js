@@ -18,7 +18,7 @@ const generateDiscordMessage = (g2gData) => {
             service_id, region_id, offer_attributes
         } = seller;
         const serverName = title.split(' ')[0];
-        const url = `https://www.g2g.com/offer/${serverName}---EU-Central?service_id=${service_id}&brand_id=${brand_id}&region_id=${region_id}&fa=${offer_attributes[0].collection_id}:${offer_attributes[0].dataset_id}`
+        const url = `https://www.g2g.com/offer/${serverName}---EU-Central?service_id=${service_id}&brand_id=${brand_id}&region_id=${region_id}&fa=${offer_attributes[0].collection_id}:${offer_attributes[0].dataset_id}&sort=lowest_price&include_offline=1`
         const priceData = {
             "title" : username,
             "description": `**Price : Rp. ${converted_unit_price}** \n\n ${description}`,
