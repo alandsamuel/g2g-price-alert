@@ -15,13 +15,14 @@ const generateDiscordMessage = (g2gData) => {
         const {
             converted_unit_price, brand_id, title, 
             username, description, user_avatar, 
-            service_id, region_id, offer_attributes
+            service_id, region_id, offer_attributes,
+            available_qty, min_qty, user_level
         } = seller;
         const serverName = title.split(' ')[0];
         const url = `https://www.g2g.com/offer/${serverName}---EU-Central?service_id=${service_id}&brand_id=${brand_id}&region_id=${region_id}&fa=${offer_attributes[0].collection_id}:${offer_attributes[0].dataset_id}&sort=lowest_price&include_offline=1`
         const priceData = {
-            "title" : username,
-            "description": `**Price : Rp. ${converted_unit_price}** \n\n ${description}`,
+            "title" : `${username} | Seller level : ${user_level}`,
+            "description": `**Price : Rp. ${converted_unit_price} \nAvailable Qty: ${available_qty} \nMinimum Qty: ${min_qty}**  \n\n ${description}`,
             "color": colors[index],
             url,
             "author": {
