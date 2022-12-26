@@ -29,7 +29,7 @@ const sendPriceToDiscord = async () => {
 }
 
 const job = new CronJob(
-	'*/30 * * * *',
+	'*/15 * * * *',
 	sendPriceToDiscord,
 	null,
 	true,
