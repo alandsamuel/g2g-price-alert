@@ -23,9 +23,13 @@ const sendToDiscord = async (content) => {
 
 const sendPriceToDiscord = async () => {
   console.log('Get prices Timestamp : ', moment())
-  const g2gPrices = await getG2gPrices();
-  const content = await generateDiscordMessage(g2gPrices);
-  sendToDiscord(content);
+  try {
+    const g2gPrices = await getG2gPrices();
+    const content = await generateDiscordMessage(g2gPrices);
+    sendToDiscord(content);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const job = new CronJob(
