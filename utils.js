@@ -29,7 +29,7 @@ const generateDiscordMessage = (g2gData) => {
             "author": {
                 "name": title,
                 "icon_url": user_avatar,
-                url
+                url: `https://www.g2g.com/id/categories/lost-ark-gold?seller=${username}`
             },
             footer: {
                 text: moment().format('D-mm-yyyy hh:mm'),
@@ -41,7 +41,7 @@ const generateDiscordMessage = (g2gData) => {
     };
 
     const content = {
-        "content": `**G2A Price Info :money_with_wings::money_with_wings::money_with_wings:** \n\nFound new **3 cheapest price** on Lost Ark Golds Category\nCheapest is :\n**${cheapest[0]}**\n**${cheapest[1]}**\n**${cheapest[2]}**\n\n-`,
+        "content": `--\n\n**G2A Price Info :money_with_wings::money_with_wings::money_with_wings:** \n\nFound new **3 cheapest price** on EU Central Lost Ark Golds Category\nCheapest is :\n**${cheapest[0]}**\n**${cheapest[1]}**\n**${cheapest[2]}**\n\n-`,
         "avatar_url": avatarUrl,
         embeds
     };

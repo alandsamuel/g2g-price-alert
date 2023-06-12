@@ -8,11 +8,13 @@ const constant = require('./constant');
 const { generateDiscordMessage } = utils;
 const { g2gPrice, laFamiliaWebhook, cronSetting } = constant;
 
-
 const getG2gPrices = async () => {
   const { data : { payload }} = await axios.get(g2gPrice);
-  const { results } = payload;
-  return results;
+  const { results } = payload; 
+  const g2gData = results.filter(({title}) => {
+    return !title.includes('West')
+  })
+  return g2gData;
 };
 
 const sendToDiscord = async (content) => {
@@ -33,7 +35,7 @@ const sendPriceToDiscord = async () => {
 }
 
 const job = new CronJob(
-	'*/15 * * * *',
+	'*/5 * * * *',
 	sendPriceToDiscord,
 	null,
 	true,
