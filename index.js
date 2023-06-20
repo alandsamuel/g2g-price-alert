@@ -35,7 +35,7 @@ const sendPriceToDiscord = async () => {
     console.log('Error when fetching data, code : ', error.code);
   }
   console.log('===============================================================');
-  console.group();
+  console.groupEnd();
 }
 
 const job = new CronJob(
