@@ -24,14 +24,18 @@ const sendToDiscord = async (content) => {
 }
 
 const sendPriceToDiscord = async () => {
+  console.group();
+  console.log('===============================================================');
   console.log('Get prices Timestamp : ', moment())
   try {
     const g2gPrices = await getG2gPrices();
     const content = await generateDiscordMessage(g2gPrices);
     sendToDiscord(content);
   } catch (error) {
-    console.log(error);
+    console.log('Error when fetching data, code : ', error.code);
   }
+  console.log('===============================================================');
+  console.group();
 }
 
 const job = new CronJob(
