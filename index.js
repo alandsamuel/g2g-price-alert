@@ -48,5 +48,4 @@ const job = new CronJob(
 );
 
 console.log('Starting Cron....')
-// job.start();
-sendPriceToDiscord();
+job.start();
