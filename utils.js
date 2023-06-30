@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { write } = require('./data');
 
 const colors = [
     5763719,
@@ -10,6 +11,7 @@ const generateDiscordMessage = (g2gData) => {
     const avatarUrl = "https://cdn.discordapp.com/attachments/598518155589189657/1056726092024647780/favicon-1.png";
     const embeds = [];
     const cheapest = [];
+    let prices = {};
     for (let index = 0; index < 3; index++) {
         const seller = g2gData[index];
         const {
@@ -38,7 +40,16 @@ const generateDiscordMessage = (g2gData) => {
         }
         embeds.push(priceData);
         cheapest.push(`${index+1}. ${title} | ${username} | Rp. ${price}`);
+        prices = {
+            ...prices,
+            [serverName]: {
+                username,
+                price
+            }
+        }
     };
+
+    write(prices);
 
     const content = {
         "content": `--\n\n**G2A Price Info :money_with_wings::money_with_wings::money_with_wings:** \n\nFound new **3 cheapest price** on EU Central Lost Ark Golds Category\nCheapest is :\n**${cheapest[0]}**\n**${cheapest[1]}**\n**${cheapest[2]}**\n\n-`,

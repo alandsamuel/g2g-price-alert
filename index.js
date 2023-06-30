@@ -32,6 +32,7 @@ const sendPriceToDiscord = async () => {
     const content = await generateDiscordMessage(g2gPrices);
     sendToDiscord(content);
   } catch (error) {
+    console.log(error);
     console.log('Error when fetching data, code : ', error.code);
   }
   console.log('===============================================================');
@@ -47,4 +48,5 @@ const job = new CronJob(
 );
 
 console.log('Starting Cron....')
-job.start();
+// job.start();
+sendPriceToDiscord();
