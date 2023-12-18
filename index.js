@@ -5,10 +5,13 @@ const axios = require('axios');
 const utils = require('./utils');
 const constant = require('./constant');
 
+const bot = require('./bot')
+
 const { generateDiscordMessage } = utils;
 const { g2gPrice, laFamiliaWebhook, cronSetting } = constant;
 
 const getG2gPrices = async () => {
+  console.lot('g2gPrice : ', g2gPrice);
   const { data : { payload }} = await axios.get(g2gPrice);
   const { results } = payload; 
   const g2gData = results.filter(({title}) => {
@@ -48,3 +51,4 @@ const job = new CronJob(
 
 console.log('Starting Cron....')
 job.start();
+bot.start();

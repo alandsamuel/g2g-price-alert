@@ -1,9 +1,0 @@
-const devWebhook = "";
-const laFamiliaWebhook = "";
-const g2gPrice = "";
-
-module.exports = {
-devWebhook,
-laFamiliaWebhook,
-g2gPrice,
-}
