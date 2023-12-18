@@ -8,11 +8,10 @@ const constant = require('./constant');
 const bot = require('./bot')
 
 const { generateDiscordMessage } = utils;
-const { g2gPrice, laFamiliaWebhook, cronSetting } = constant;
+const { G2G_URL, FAMILIA_WEBHOOK, cronSetting } = constant;
 
 const getG2gPrices = async () => {
-  console.lot('g2gPrice : ', g2gPrice);
-  const { data : { payload }} = await axios.get(g2gPrice);
+  const { data : { payload }} = await axios.get(G2G_URL);
   const { results } = payload; 
   const g2gData = results.filter(({title}) => {
     return !title.includes('West')
@@ -21,7 +20,7 @@ const getG2gPrices = async () => {
 };
 
 const sendToDiscord = async (content) => {
-  const url = laFamiliaWebhook;
+  const url = FAMILIA_WEBHOOK;
   const result = await axios.post(url, content);
   return result;
 }
