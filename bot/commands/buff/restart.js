@@ -24,18 +24,18 @@ async function runBatFile(batFilePath, interaction) {
       const bat = spawn('cmd.exe', ['/c', batFilePath]);
   
       bat.stdout.on('data', async (data) => {
-        await interaction.reply(`Output: ${data}`);
+        await interaction.followUp(`Output: ${data}`);
       });
   
       bat.stderr.on('data', async (data) => {
-        await interaction.reply(`Error: ${data}`);
+        await interaction.followUp(`Error: ${data}`);
       });
   
       bat.on('close', async (code) => {
-        await interaction.reply(`Batch file exited with code ${code}`);
+        await interaction.followUp(`Batch file exited with code ${code}`);
       }); 
     } catch (error) {
-        await interaction.reply('Failed to execute batch file:', error.message);
+        await interaction.followUp('Failed to execute batch file:', error.message);
     }
   }
 
