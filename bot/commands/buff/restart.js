@@ -6,6 +6,7 @@ const {
 const wait = require('node:timers/promises').setTimeout;
 const { exec, spawn } = require('child_process');
 const { promisify } = require('util');
+const { resolve } = require('node:path');
 
 const execAsync = promisify(exec);
 
@@ -13,44 +14,74 @@ async function killProcess(processName, interaction) {
   try {
     // Use taskkill to terminate the process by name
     await execAsync(`taskkill /IM ${processName} /F`);
-    await interaction.reply(`${processName} has been terminated.`);
+    await interaction.followUp({
+        content: `${processName} has been terminated.`,
+        fetchReply: true, // Fetch the message object
+      });
   } catch (error) {
-    await interaction.reply(`Failed to terminate ${processName}:`, error.message);
+    await interaction.followUp({
+      content: `Failed to terminate ${processName}: ${error.message}`,
+      fetchReply: true, // Fetch the message object
+    });
   }
 }
 
 async function runBatFile(batFilePath, interaction) {
+  const successMessage = 'Launching server';
     try {
       const bat = spawn('cmd.exe', ['/c', batFilePath]);
   
       bat.stdout.on('data', async (data) => {
-        await interaction.followUp(`Output: ${data}`);
+        await interaction.followUp({
+          content: `Output: ${data}`,
+          fetchReply: true, // Fetch the message object
+        });
+        if(data.toString().includes(successMessage)){
+          await interaction.followUp({
+            content: 'Server restarted successfully!',
+            fetchReply: true, // Fetch the message object
+          });
+          resolve();
+          bat.kill;
+        }
       });
   
       bat.stderr.on('data', async (data) => {
-        await interaction.followUp(`Error: ${data}`);
+        await interaction.followUp({
+          content: `Error: ${data}`,
+          fetchReply: true, // Fetch the message object
+        });
+
       });
   
       bat.on('close', async (code) => {
-        await interaction.followUp(`Batch file exited with code ${code}`);
+        await interaction.followUp({
+          content: `Batch file exited with code ${code}`,
+          fetchReply: true, // Fetch the message object
+        });
+
       }); 
     } catch (error) {
-        await interaction.followUp('Failed to execute batch file:', error.message);
+        await interaction.followUp({
+          content: `Failed to execute batch file: ${error.message}`,
+          fetchReply: true, // Fetch the message object
+        });
+
     }
   }
 
 const restart = async (interaction) => {
     const processName = 'PalServer-Win64-Shipping-Cmd.exe';
     const batFilePath = 'E:\\steamcmd\\bumbung.bat';
+    await interaction.reply(`preparing restart process`);
 
-    // // Kill the process
-    // await killProcess(processName, interaction);
+    // Kill the process
+    await killProcess(processName, interaction);
 
     // Run the batch file
     await runBatFile(batFilePath, interaction);
 
-    //cleanup after 10Minutes
-    await wait(60000);
+    await wait(3000);
     await interaction.deleteReply();
 }
 
