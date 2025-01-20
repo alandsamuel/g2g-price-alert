@@ -60,6 +60,5 @@ module.exports = {
         .setDescription('restart palworld server'),
     async execute(interaction) {
         const result = await restart(interaction);
-        await interaction.reply('Restart Success!');
     },
 };
