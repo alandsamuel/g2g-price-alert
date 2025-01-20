@@ -30,8 +30,8 @@ async function getProcessInfo(processName) {
 }
 
 const search = async (interaction) => {
-    const processInfoServer = await getProcessInfo('PalServer-Win64-Shipping-Cmd.exe');
-    await interaction.reply(`PalServer-Win64-Shipping-Cmd.exe is running with memory usage: ${processInfoServer.memUsage}KB`);
+    const processInfoServer = await getProcessInfo('PalServer-Win64-Shipping-');
+    await interaction.reply(`Palworld server is running with memory usage: ${processInfoServer.memUsage}KB`);
 
     //cleanup after 1Minutes
     await wait(60000);
