@@ -15,7 +15,6 @@ async function getProcessInfo(processName) {
     const lines = stdout.split('\n');
     
     for (const line of lines) {
-        console.log(line);
       if (line.toLowerCase().includes(processName.toLowerCase())) {
         const parts = line.trim().split(/\s+/);
         const memUsage = parts[parts.length - 2]; // Memory usage is in the last columns
