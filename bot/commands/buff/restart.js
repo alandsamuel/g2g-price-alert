@@ -40,7 +40,7 @@ async function runBatFile(batFilePath, interaction) {
   }
 
 const restart = async (interaction) => {
-    const processName = 'palworld.exe';
+    const processName = 'PalServer-Win64-Shipping-Cmd.exe';
     const batFilePath = 'E:\\steamcmd\\bimbing.bat';
 
     // Kill the process
