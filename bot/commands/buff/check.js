@@ -29,12 +29,8 @@ async function getProcessInfo(processName) {
 }
 
 const search = async (interaction) => {
-    const input = interaction.options.getString('input') ?? 'No input provided';
-    const processInfo = await getProcessInfo(input);
-    await interaction.reply(`${input} is running with memory usage: ${processInfo.memUsage}KB`);
-
     const processInfoServer = await getProcessInfo('PalServer-Win64-Shipping-Cmd.exe');
-    await interaction.reply(`${input} is running with memory usage: ${processInfoServer.memUsage}KB`);
+    await interaction.reply(`PalServer-Win64-Shipping-Cmd.exe is running with memory usage: ${processInfoServer.memUsage}KB`);
 
     //cleanup after 1Minutes
     await wait(60000);
@@ -44,11 +40,7 @@ const search = async (interaction) => {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('check')
-		.setDescription('check process')
-        .addStringOption(option =>
-            option.setName('input')
-                .setDescription('Search term')
-                .setRequired(true)),
+		.setDescription('check process'),
 	async execute(interaction) {
 		await search(interaction);
 	},
