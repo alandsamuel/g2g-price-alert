@@ -10,8 +10,8 @@ const bot = require('./bot')
 const { generateDiscordMessage } = utils;
 const { G2G_URL, FAMILIA_WEBHOOK, cronSetting } = constant;
 
-const getG2gPrices = async () => {
-  const { data : { payload }} = await axios.get(G2G_URL);
+const getG2gPricesLA = async () => {
+  const { data : { payload }} = await axios.get(G2G_URL['LA']);
   const { results } = payload; 
   const g2gData = results.filter(({title}) => {
     return !title.includes('West')
@@ -19,8 +19,13 @@ const getG2gPrices = async () => {
   return g2gData;
 };
 
-const sendToDiscord = async (content) => {
-  const url = FAMILIA_WEBHOOK;
+const getG2gPrices = async (url) => {
+  const { data : { payload }} = await axios.get(url);
+  const { results } = payload; 
+  return results;
+};
+
+const sendToDiscord = async (content, url) => {
   const result = await axios.post(url, content);
   return result;
 }
@@ -30,9 +35,14 @@ const sendPriceToDiscord = async () => {
   console.log('===============================================================');
   console.log('Get prices Timestamp : ', moment())
   try {
-    const g2gPrices = await getG2gPrices();
-    const content = await generateDiscordMessage(g2gPrices);
-    sendToDiscord(content);
+    console.log(G2G_URL["LE"])
+    console.log(G2G_URL["LA"])
+    const g2gPricesLA = await getG2gPricesLA();
+    const g2gPricesLE = await getG2gPrices(G2G_URL["LE"]);
+    const contentLA = await generateDiscordMessage(g2gPricesLA);
+    const contentLE = await generateDiscordMessage(g2gPricesLE);
+    sendToDiscord(contentLA, FAMILIA_WEBHOOK.LA);
+    sendToDiscord(contentLE, FAMILIA_WEBHOOK.LE);
   } catch (error) {
     console.log('Error when fetching data, code : ', error.code);
   }
@@ -40,14 +50,16 @@ const sendPriceToDiscord = async () => {
   console.groupEnd();
 }
 
-const job = new CronJob(
-	'*/5 * * * *',
-	sendPriceToDiscord,
-	null,
-	true,
-	'Asia/Jakarta'
-);
+// const job = new CronJob(
+// 	'*/1 * * * *',
+// 	sendPriceToDiscord,
+// 	null,
+// 	true,
+// 	'Asia/Jakarta'
+// );
 
 console.log('Starting Cron....')
-job.start();
+// job.start();
 bot.start();
+
+// sendPriceToDiscord();
