@@ -41,10 +41,10 @@ async function runBatFile(batFilePath, interaction) {
 
 const restart = async (interaction) => {
     const processName = 'PalServer-Win64-Shipping-Cmd.exe';
-    const batFilePath = 'E:\\steamcmd\\bimbing.bat';
+    const batFilePath = 'E:\\steamcmd\\bumbung.bat';
 
-    // Kill the process
-    await killProcess(processName, interaction);
+    // // Kill the process
+    // await killProcess(processName, interaction);
 
     // Run the batch file
     await runBatFile(batFilePath, interaction);
