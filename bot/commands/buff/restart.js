@@ -32,41 +32,59 @@ async function runBatFile(batFilePath, interaction) {
       const bat = spawn('cmd.exe', ['/c', batFilePath]);
   
       bat.stdout.on('data', async (data) => {
-        await interaction.followUp({
-          content: `Output: ${data}`,
-          fetchReply: true, // Fetch the message object
-        });
-        if(data.toString().includes(successMessage)){
+        try {
           await interaction.followUp({
-            content: 'Server restarted successfully!',
+            content: `Output: ${data}`,
             fetchReply: true, // Fetch the message object
           });
+        } catch (error) {
+          console.log('error when restarting the server, try again later!')
+        }
+        
+        if(data.toString().includes(successMessage)){
+          try {
+            await interaction.followUp({
+              content: 'Server restarted successfully!',
+              fetchReply: true, // Fetch the message object
+            });
+          } catch (error) {
+            console.log('error when restarting the server, try again later!')
+          }
           resolve();
           bat.kill;
         }
       });
   
       bat.stderr.on('data', async (data) => {
-        await interaction.followUp({
-          content: `Error: ${data}`,
-          fetchReply: true, // Fetch the message object
-        });
-
+        try {
+          await interaction.followUp({
+            content: `Error: ${data}`,
+            fetchReply: true, // Fetch the message object
+          });
+        } catch (error) {
+          console.log('error when restarting the server, try again later!')
+        }
       });
   
       bat.on('close', async (code) => {
-        await interaction.followUp({
-          content: `Batch file exited with code ${code}`,
-          fetchReply: true, // Fetch the message object
-        });
-
+        try {
+          await interaction.followUp({
+            content: `Batch file exited with code ${code}`,
+            fetchReply: true, // Fetch the message object
+          });
+        } catch (error) {
+          console.log('error when restarting the server, try again later!')
+        }
       }); 
     } catch (error) {
+      try {
         await interaction.followUp({
           content: `Failed to execute batch file: ${error.message}`,
           fetchReply: true, // Fetch the message object
         });
-
+      } catch (error) {
+        console.log('error when restarting the server, try again later!')
+      }
     }
   }
 
@@ -80,9 +98,6 @@ const restart = async (interaction) => {
 
     // Run the batch file
     await runBatFile(batFilePath, interaction);
-
-    await wait(3000);
-    await interaction.deleteReply();
 }
 
 module.exports = {
@@ -90,6 +105,11 @@ module.exports = {
         .setName('restart')
         .setDescription('restart palworld server'),
     async execute(interaction) {
+      try {
         await restart(interaction);
+      } catch (error) {
+        console.log('error when restarting the server, try again later!')
+      }
+        
     },
 };

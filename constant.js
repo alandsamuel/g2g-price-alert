@@ -1,4 +1,5 @@
-require('dotenv').config()
+const path = require('path'); 
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const DEV_WEBHOOK = process.env.DEV_WEBHOOK
 const BOT_TOKEN = process.env.BOT_TOKEN
